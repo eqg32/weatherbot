@@ -26,7 +26,7 @@ async def get_city(city: str) -> City:
                 params=params,
                 )
 
-    return City(response.json()["lat"], response.json()["lon"])
+    return City(response.json()[0]["lat"], response.json()[0]["lon"])
 
 
 async def get_weather(city: City) -> Weather:
@@ -34,6 +34,7 @@ async def get_weather(city: City) -> Weather:
             "lat": city.lat,
             "lon": city.lon,
             "lang": "en",
+            "units": "metric",
             "appid": weather_api,
             }
 
@@ -46,5 +47,5 @@ async def get_weather(city: City) -> Weather:
     return Weather(
             response.json()["main"]["temp"],
             response.json()["main"]["feels_like"],
-            response.json()["weather"]["description"],
+            response.json()["weather"][0]["description"],
             )
